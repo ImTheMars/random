@@ -1,83 +1,41 @@
 <html>
   <head>
     <title>Rock Paper Scissors</title>
-    <style>
-      .score {
-        font-size: 24px;
-        margin: 16px;
-      }
-      .player-score {
-        color: green;
-      }
-      .computer-score {
-        color: red;
-      }
-      .choice {
-        display: inline-block;
-        border: 1px solid black;
-        border-radius: 8px;
-        padding: 8px;
-        margin: 8px;
-        cursor: pointer;
-      }
-      .choice:hover {
-        background-color: lightgray;
-      }
-      .selected {
-        background-color: lightgreen;
-      }
-    </style>
   </head>
   <body>
-    <div class="score player-score">Player: 0</div>
-    <div class="score computer-score">Computer: 0</div>
-    <div>
-      <div class="choice" id="rock">Rock</div>
-      <div class="choice" id="paper">Paper</div>
-      <div class="choice" id="scissors">Scissors</div>
-    </div>
-    <div>
-      Difficulty:
-      <select id="difficulty">
-        <option value="easy">Easy</option>
-        <option value="hard">Hard</option>
-        <option value="impossible">Impossible</option>
-      </select>
-    </div>
-    <div id="result"></div>
-    <script>
-      const choices = ['rock', 'paper', 'scissors'];
-      const playerScoreEl = document.querySelector('.player-score');
-      const computerScoreEl = document.querySelector('.computer-score');
-      const resultEl = document.getElementById('result');
-      const difficultyEl = document.getElementById('difficulty');
-
-      let playerScore = 0;
-      let computerScore = 0;
-
-      function getComputerChoice(difficulty) {
-        if (difficulty === 'easy') {
-          return choices[Math.floor(Math.random() * choices.length)];
-        } else if (difficulty === 'hard') {
-          // In hard mode, the computer will always choose the option that beats
-          // the player's previous choice
-          const playerChoice = playerScoreEl.textContent.split(': ')[1];
-          if (playerChoice === 'rock') {
-            return 'paper';
-          } else if (playerChoice === 'paper') {
-            return 'scissors';
-          } else {
-            return 'rock';
-          }
-        } else {
-          // In impossible mode, the computer will always choose the option that
-          // wins against the player's choice
-          const playerChoice = playerScoreEl.textContent.split(': ')[1];
-          if (playerChoice === 'rock') {
-            return 'scissors';
-          } else if (playerChoice === 'paper') {
-            return 'rock';
-          } else {
-            return 'paper';
-          }
-        }
+    <h1>Rock Paper Scissors</h1>
+    <p>Current score: Human <span id="human-score">0</span> - Computer <span id="computer-score">0</span></p>
+    <p>Make your move:</p>
+    <button id="rock" onclick="play('rock')">Rock</button>
+    <button id="paper" onclick="play('paper')">Paper</button>
+    <button id="scissors" onclick="play('scissors')">Scissors</button>
+    <p>Computer's move: <span id="computer-move">?</span></p>
+  </body>
+  <script>
+    const outcomes = ['rock', 'paper', 'scissors'];
+    let humanScore = 0;
+    let computerScore = 0;
+    function play(humanMove) {
+      // Generate the computer's move
+      const computerMove = outcomes[Math.floor(Math.random() * outcomes.length)];
+      // Update the computer's move on the page
+      document.getElementById('computer-move').textContent = computerMove;
+      // Determine the outcome of the game
+      if (humanMove === computerMove) {
+        // It's a tie
+      } else if (
+        (humanMove === 'rock' && computerMove === 'scissors') ||
+        (humanMove === 'paper' && computerMove === 'rock') ||
+        (humanMove === 'scissors' && computerMove === 'paper')
+      ) {
+        // The human wins
+        humanScore++;
+        document.getElementById('human-score').textContent = humanScore;
+      } else {
+        // The computer wins
+        computerScore++;
+        document.getElementById('computer-score').textContent = computerScore;
+      }
+    }
+  </script>
+</html>
