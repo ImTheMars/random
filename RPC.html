@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Rock, Paper, Scissors</title>
+  </head>
+  <body>
+    <h1>Rock, Paper, Scissors</h1>
+    <p>Choose your move:</p>
+    <button id="rock" onclick="play('rock')">Rock</button>
+    <button id="paper" onclick="play('paper')">Paper</button>
+    <button id="scissors" onclick="play('scissors')">Scissors</button>
+    <p>Result: <span id="result"></span></p>
+    <script>
+      function play(playerMove) {
+        // Generate computer's move
+        const moves = ['rock', 'paper', 'scissors'];
+        const computerMove = moves[Math.floor(Math.random() * moves.length)];
+
+        // Determine result
+        let result;
+        if (playerMove === computerMove) {
+          result = "It's a tie!";
+        } else if (playerMove === 'rock' && computerMove === 'scissors' ||
+                   playerMove === 'paper' && computerMove === 'rock' ||
+                   playerMove === 'scissors' && computerMove === 'paper') {
+          result = "You win!";
+        } else {
+          result = "You lose!";
+        }
+
+        // Display result
+        document.getElementById("result").innerHTML = `You played ${playerMove}, the computer played ${computerMove}. ${result}`;
+      }
+    </script>
+  </body>
+</html>
